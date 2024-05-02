@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService{
@@ -21,25 +22,30 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Book creat(Book book) {
+    public Book create(Book book) {
         BookEntity bookEntity = BookMapper.bookToBookEntity(book);
          return BookMapper.bookEntityToBook(repo.save(bookEntity));
     }
 
     @Override
     public Book updateById(Book book, String isbn) {
-
-        return null;
+        Optional<Book> optBook = findById(isbn);
+        if (optBook.isPresent()){
+            book.setIsbn(optBook.get().getIsbn());
+          return create(book);
+        }else {
+            throw new RuntimeException("Can't Update Book");
+        }
     }
 
     @Override
     public List<Book> findAll() {
-        return null;
+        return  repo.findAll().stream().map(BookMapper::bookEntityToBook).collect(Collectors.toList());
     }
 
     @Override
-    public String deleteBookById(String isbn) {
-        return null;
+    public void deleteBookById(String isbn) {
+        repo.deleteById(isbn);
     }
 
     @Override

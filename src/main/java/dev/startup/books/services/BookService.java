@@ -7,13 +7,13 @@ import java.util.Optional;
 
 public interface BookService {
 
-    Book creat(Book book);
+    Book create(Book book);
 
     Book updateById(Book book, String isbn);
 
     List<Book> findAll();
 
-    String deleteBookById(String isbn);
+    void deleteBookById(String isbn);
 
     Optional<Book> findById(String isbn);
 

@@ -37,7 +37,7 @@ public class BookServiceImplTest {
                                           .build();
         when(repo.save(eq(bookEntity))).thenReturn(bookEntity);
 
-       Book savedBook =bookServiceImpl.creat(book);
+       Book savedBook =bookServiceImpl.create(book);
        assertEquals(book,savedBook);
     }
 }
